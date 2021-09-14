@@ -170,6 +170,8 @@ export interface TreeProps {
 
   // direction for drag logic
   direction?: Direction;
+
+  leafRow: boolean;
 }
 
 interface TreeState {
@@ -1322,6 +1324,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
       onContextMenu,
       onScroll,
       direction,
+      leafRow
     } = this.props;
     const domProps: React.HTMLAttributes<HTMLDivElement> = getDataAndAria(this.props);
 
@@ -1402,6 +1405,7 @@ class Tree extends React.Component<TreeProps, TreeState> {
             onListChangeEnd={this.onListChangeEnd}
             onContextMenu={onContextMenu}
             onScroll={onScroll}
+            leafRow={leafRow}
             {...this.getTreeNodeRequiredProps()}
             {...domProps}
           />

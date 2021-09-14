@@ -8,6 +8,7 @@ import { FlattenNode, Key, DataEntity, DataNode, ScrollTo } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getTreeNodeProps, getKey } from './utils/treeUtil';
+import classNames from 'classnames';
 
 const HIDDEN_STYLE = {
   width: 0,
@@ -90,6 +91,7 @@ interface NodeListProps {
 
   onListChangeStart: () => void;
   onListChangeEnd: () => void;
+  leafRow: boolean
 }
 
 /**
@@ -164,9 +166,10 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
 
     onListChangeStart,
     onListChangeEnd,
-
+    leafRow,
     ...domProps
   } = props;
+  console.log(666,leafRow);
 
   // =============================== Ref ================================
   const listRef = React.useRef<ListRef>(null);
@@ -309,6 +312,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         virtual={virtual}
         itemHeight={itemHeight}
         prefixCls={`${prefixCls}-list`}
+        className={classNames({[`${prefixCls}-leafRow`]: leafRow})}
         ref={listRef}
         onVisibleChange={(originList, fullList) => {
           const originSet = new Set(originList);

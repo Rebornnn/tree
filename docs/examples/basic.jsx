@@ -2,7 +2,7 @@
 import React from 'react';
 import '../../assets/index.less';
 import './basic.less';
-import Tree, { TreeNode } from 'rc-tree';
+import Tree, { TreeNode } from '../../src';
 
 const treeData = [
   {
@@ -18,12 +18,6 @@ const treeData = [
           { key: '0-0-1-1', title: 'parent 1-2-1' },
           { key: '0-0-1-2', title: 'parent 1-2-2' },
           { key: '0-0-1-3', title: 'parent 1-2-3' },
-          { key: '0-0-1-4', title: 'parent 1-2-4' },
-          { key: '0-0-1-5', title: 'parent 1-2-5' },
-          { key: '0-0-1-6', title: 'parent 1-2-6' },
-          { key: '0-0-1-7', title: 'parent 1-2-7' },
-          { key: '0-0-1-8', title: 'parent 1-2-8' },
-          { key: '0-0-1-9', title: 'parent 1-2-9' },
           { key: 1128, title: 1128 },
         ],
       },
@@ -98,7 +92,7 @@ class Demo extends React.Component {
 
     return (
       <div style={{ margin: '0 20px' }}>
-        <h2>simple</h2>
+        {/* <h2>simple</h2>
         <input aria-label="good" />
         <Tree
           ref={this.setTreeRef}
@@ -128,10 +122,11 @@ class Demo extends React.Component {
               <TreeNode title="parent 1-2-1" key="0-0-2-1" />
             </TreeNode>
           </TreeNode>
-        </Tree>
+        </Tree> */}
 
         <h2>Check on Click TreeNode</h2>
         <Tree
+          ref={this.treeRef}
           className="myCls"
           showLine
           checkable
@@ -143,9 +138,10 @@ class Demo extends React.Component {
           onSelect={this.onSelect}
           onCheck={this.onCheck}
           treeData={treeData}
+          leafRow={true}
         />
 
-        <h2>Select</h2>
+        {/* <h2>Select</h2>
         <Tree
           ref={this.treeRef}
           className="myCls"
@@ -153,9 +149,9 @@ class Demo extends React.Component {
           treeData={treeData}
           onSelect={this.onSelect}
           height={150}
-        />
+        /> */}
 
-        <button
+        {/* <button
           type="button"
           onClick={() => {
             setTimeout(() => {
@@ -165,7 +161,7 @@ class Demo extends React.Component {
           }}
         >
           Scroll Last
-        </button>
+        </button> */}
       </div>
     );
   }

@@ -548,6 +548,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-selected`]: selected,
           [`${prefixCls}-treenode-loading`]: loading,
           [`${prefixCls}-treenode-active`]: active,
+          [`${prefixCls}-treenode-leaf`]: this.isLeaf(),
           [`${prefixCls}-treenode-leaf-last`]: isEndNode,
 
           'drop-target': dropTargetKey === eventKey,
