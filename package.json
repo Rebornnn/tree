@@ -1,6 +1,6 @@
 {
   "name": "bonree-tree",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "tree ui component for react",
   "engines": {
     "node": ">=10.x"
