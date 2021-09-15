@@ -264,6 +264,15 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
     return isLeaf || (!loadData && !hasChildren) || (loadData && loaded && !hasChildren);
   };
 
+  isRow = () => {
+    const { eventKey } = this.props;
+    const {
+      context: { keyEntities },
+    } = this.props;
+
+    return keyEntities[eventKey]?.parent?.node.row;
+  };
+
   isDisabled = () => {
     const { disabled } = this.props;
     const {
@@ -548,7 +557,7 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
           [`${prefixCls}-treenode-selected`]: selected,
           [`${prefixCls}-treenode-loading`]: loading,
           [`${prefixCls}-treenode-active`]: active,
-          [`${prefixCls}-treenode-leaf`]: this.isLeaf(),
+          [`${prefixCls}-treenode-row`]: this.isRow(),
           [`${prefixCls}-treenode-leaf-last`]: isEndNode,
 
           'drop-target': dropTargetKey === eventKey,

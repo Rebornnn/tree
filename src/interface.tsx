@@ -15,6 +15,7 @@ export interface DataNode {
   selectable?: boolean;
   switcherIcon?: IconType;
 
+  row?: boolean;
   /** Set style of TreeNode. This is not recommend if you don't have any force requirement */
   className?: string;
   style?: React.CSSProperties;
@@ -74,6 +75,7 @@ export interface FlattenNode {
   key: Key;
   isStart: boolean[];
   isEnd: boolean[];
+  row?: boolean;
 }
 
 export type GetKey<RecordType> = (record: RecordType, index?: number) => Key;

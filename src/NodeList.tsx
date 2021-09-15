@@ -91,7 +91,6 @@ interface NodeListProps {
 
   onListChangeStart: () => void;
   onListChangeEnd: () => void;
-  leafRow: boolean
 }
 
 /**
@@ -166,10 +165,8 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
 
     onListChangeStart,
     onListChangeEnd,
-    leafRow,
     ...domProps
   } = props;
-  console.log(666,leafRow);
 
   // =============================== Ref ================================
   const listRef = React.useRef<ListRef>(null);
@@ -312,7 +309,7 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         virtual={virtual}
         itemHeight={itemHeight}
         prefixCls={`${prefixCls}-list`}
-        className={classNames({[`${prefixCls}-leafRow`]: leafRow})}
+        className={classNames({ [`${prefixCls}-leafRow`]: mergedData.some(elem => elem.row) })}
         ref={listRef}
         onVisibleChange={(originList, fullList) => {
           const originSet = new Set(originList);

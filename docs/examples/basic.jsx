@@ -4,24 +4,74 @@ import '../../assets/index.less';
 import './basic.less';
 import Tree, { TreeNode } from '../../src';
 
+// const treeData = [
+//   {
+//     key: '0-0',
+//     title: 'parent 1',
+//     children: [
+//       { key: '0-0-0', title: 'parent 1-1', children: [{ key: '0-0-0-0', title: 'parent 1-1-0' }] },
+//       {
+//         key: '0-0-1',
+//         title: 'parent 1-2',
+//         children: [
+//           { key: '0-0-1-0', title: 'parent 1-2-0', disableCheckbox: true },
+//           { key: '0-0-1-1', title: 'parent 1-2-1' },
+//           { key: '0-0-1-2', title: 'parent 1-2-2' },
+//           { key: '0-0-1-3', title: 'parent 1-2-3' },
+//           { key: 1128, title: 1128 },
+//         ],
+//       },
+//     ],
+//   },
+// ];
+
 const treeData = [
   {
-    key: '0-0',
-    title: 'parent 1',
+    title: 'parent-1',
+    key: '1',
     children: [
-      { key: '0-0-0', title: 'parent 1-1', children: [{ key: '0-0-0-0', title: 'parent 1-1-0' }] },
       {
-        key: '0-0-1',
-        title: 'parent 1-2',
+        title: '1-0',
+        key: '1-0',
+        row: true,
         children: [
-          { key: '0-0-1-0', title: 'parent 1-2-0', disableCheckbox: true },
-          { key: '0-0-1-1', title: 'parent 1-2-1' },
-          { key: '0-0-1-2', title: 'parent 1-2-2' },
-          { key: '0-0-1-3', title: 'parent 1-2-3' },
-          { key: 1128, title: 1128 },
+          { title: '1-0-0', key: '1-0-0' },
+          { title: '1-0-1', key: '1-0-1' },
+          { title: '1-0-2', key: '1-0-2' },
         ],
       },
+      {
+        title: '1-1',
+        key: '1-1',
+        row: true,
+        children: [
+          { title: '1-1-0', key: '1-1-0' },
+          { title: '1-1-1', key: '1-1-1' },
+          { title: '1-1-2', key: '1-1-2' },
+        ],
+      },
+      {
+        title: '1-2',
+        key: '1-2',
+      },
     ],
+  },
+  {
+    title: 'parent-2',
+    key: '2',
+    // row: true,
+    children: [
+      { title: '2-0-0', key: '2-0-0' },
+      { title: '2-0-1', key: '2-0-1' },
+      { title: '2-0-2', key: '2-0-2' },
+    ],
+  },
+  {
+    title: 'parent-3',
+    key: '3',
+    // children: [
+    //   { title: '4545', key: '4545' },
+    // ],
   },
 ];
 
@@ -138,7 +188,6 @@ class Demo extends React.Component {
           onSelect={this.onSelect}
           onCheck={this.onCheck}
           treeData={treeData}
-          leafRow={true}
         />
 
         {/* <h2>Select</h2>
