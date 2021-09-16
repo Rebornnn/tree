@@ -80,9 +80,9 @@ const treeData = [
 ];
 
 class Demo extends React.Component {
-  static defaultProps = {
-    keys: ['0-0-0-0'],
-  };
+  // static defaultProps = {
+  //   keys: ['0-0-0-0'],
+  // };
 
   constructor(props) {
     super(props);

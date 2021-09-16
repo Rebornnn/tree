@@ -372,7 +372,9 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
                     isEnd={treeNode.isEnd}
                   />
                   <div className={`${prefixCls}-row`}>
-                    {treeNode.children.map(elem => renderMotionTreeNode(elem))}
+                    {treeNode.children.map(elem => (
+                      <React.Fragment key={elem.key}>{renderMotionTreeNode(elem)}</React.Fragment>
+                    ))}
                   </div>
                 </div>
               </>
