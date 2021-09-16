@@ -33,7 +33,7 @@ const treeData = [
       {
         title: '1-0',
         key: '1-0',
-        row: true,
+        // row: true,
         children: [
           { title: '1-0-0', key: '1-0-0' },
           { title: '1-0-1', key: '1-0-1' },
@@ -48,6 +48,10 @@ const treeData = [
           { title: '1-1-0', key: '1-1-0' },
           { title: '1-1-1', key: '1-1-1' },
           { title: '1-1-2', key: '1-1-2' },
+          { title: '1-1-33333333333333333333333333333', key: '1-1-3' },
+          { title: '1-1-4444444444444444444444444444', key: '1-1-4' },
+          { title: '1-1-55555555555555555555555555', key: '1-1-5' },
+          { title: '1-1-666666666666666666666666666', key: '1-1-6' },
         ],
       },
       {
@@ -123,22 +127,22 @@ class Demo extends React.Component {
   };
 
   render() {
-    const customLabel = (
-      <span className="cus-label">
-        <span>operations: </span>
-        <span style={{ color: 'blue' }} onClick={this.onEdit}>
-          Edit
-        </span>
-        &nbsp;
-        <label onClick={e => e.stopPropagation()}>
-          <input type="checkbox" /> checked
-        </label>
-        &nbsp;
-        <span style={{ color: '#EB0000' }} onClick={this.onDel}>
-          Delete
-        </span>
-      </span>
-    );
+    // const customLabel = (
+    //   <span className="cus-label">
+    //     <span>operations: </span>
+    //     <span style={{ color: 'blue' }} onClick={this.onEdit}>
+    //       Edit
+    //     </span>
+    //     &nbsp;
+    //     <label onClick={e => e.stopPropagation()}>
+    //       <input type="checkbox" /> checked
+    //     </label>
+    //     &nbsp;
+    //     <span style={{ color: '#EB0000' }} onClick={this.onDel}>
+    //       Delete
+    //     </span>
+    //   </span>
+    // );
 
     return (
       <div style={{ margin: '0 20px' }}>

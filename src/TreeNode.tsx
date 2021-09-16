@@ -576,7 +576,9 @@ class InternalTreeNode extends React.Component<InternalTreeNodeProps, TreeNodeSt
         onMouseMove={onMouseMove}
         {...dataOrAriaAttributeProps}
       >
-        <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
+        {this.isRow() ? null : (
+          <Indent prefixCls={prefixCls} level={level} isStart={isStart} isEnd={isEnd} />
+        )}
         {this.renderSwitcher()}
         {this.renderCheckbox()}
         {this.renderSelector()}

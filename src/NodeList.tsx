@@ -8,7 +8,7 @@ import { FlattenNode, Key, DataEntity, DataNode, ScrollTo } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getTreeNodeProps, getKey } from './utils/treeUtil';
-import classNames from 'classnames';
+import Indent from './Indent';
 
 const HIDDEN_STYLE = {
   width: 0,
@@ -262,6 +262,44 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
     keyEntities,
   };
 
+  const renderMotionTreeNode = (treeNode: FlattenNode) => {
+    const {
+      pos,
+      data: { ...restProps },
+      title,
+      key,
+      isStart,
+      isEnd,
+    } = treeNode;
+    const mergedKey = getKey(key, pos);
+    delete restProps.key;
+    delete restProps.children;
+
+    const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
+
+    return (
+      <MotionTreeNode
+        {...restProps}
+        {...treeNodeProps}
+        title={title}
+        active={!!activeItem && key === activeItem.data.key}
+        pos={pos}
+        data={treeNode.data}
+        isStart={isStart}
+        isEnd={isEnd}
+        motion={motion}
+        motionNodes={key === MOTION_KEY ? transitionRange : null}
+        motionType={motionType}
+        onMotionStart={onListChangeStart}
+        onMotionEnd={onMotionEnd}
+        treeNodeRequiredProps={treeNodeRequiredProps}
+        onMouseMove={() => {
+          onActiveChange(null);
+        }}
+      />
+    );
+  };
+
   return (
     <>
       {focused && activeItem && (
@@ -309,7 +347,6 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         virtual={virtual}
         itemHeight={itemHeight}
         prefixCls={`${prefixCls}-list`}
-        className={classNames({ [`${prefixCls}-leafRow`]: mergedData.some(elem => elem.row) })}
         ref={listRef}
         onVisibleChange={(originList, fullList) => {
           const originSet = new Set(originList);
@@ -322,41 +359,31 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         }}
       >
         {(treeNode: FlattenNode) => {
-          const {
-            pos,
-            data: { ...restProps },
-            title,
-            key,
-            isStart,
-            isEnd,
-          } = treeNode;
-          const mergedKey = getKey(key, pos);
-          delete restProps.key;
-          delete restProps.children;
+          let resultNode = null;
+          if (treeNode.row && treeNode.children.length) {
+            resultNode = (
+              <>
+                {renderMotionTreeNode(treeNode)}
+                <div className={`${prefixCls}-row-wrap`}>
+                  <Indent
+                    prefixCls={prefixCls}
+                    level={keyEntities[treeNode.key].level + 1}
+                    isStart={treeNode.isStart}
+                    isEnd={treeNode.isEnd}
+                  />
+                  <div className={`${prefixCls}-row`}>
+                    {treeNode.children.map(elem => renderMotionTreeNode(elem))}
+                  </div>
+                </div>
+              </>
+            );
+          } else if (treeNode.parent && treeNode.parent.row) {
+            resultNode = <></>;
+          } else {
+            resultNode = renderMotionTreeNode(treeNode);
+          }
 
-          const treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
-
-          return (
-            <MotionTreeNode
-              {...restProps}
-              {...treeNodeProps}
-              title={title}
-              active={!!activeItem && key === activeItem.data.key}
-              pos={pos}
-              data={treeNode.data}
-              isStart={isStart}
-              isEnd={isEnd}
-              motion={motion}
-              motionNodes={key === MOTION_KEY ? transitionRange : null}
-              motionType={motionType}
-              onMotionStart={onListChangeStart}
-              onMotionEnd={onMotionEnd}
-              treeNodeRequiredProps={treeNodeRequiredProps}
-              onMouseMove={() => {
-                onActiveChange(null);
-              }}
-            />
-          );
+          return resultNode;
         }}
       </VirtualList>
     </>
