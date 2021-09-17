@@ -16,6 +16,8 @@ interface MotionTreeNodeProps extends Omit<TreeNodeProps, 'domRef'> {
   motionType?: 'show' | 'hide';
 
   treeNodeRequiredProps: TreeNodeRequiredProps;
+  motionRow?: boolean;
+  motionMarginLeft?: number;
 }
 
 const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeNodeProps> = (
@@ -29,6 +31,8 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
     onMotionEnd: onOriginMotionEnd,
     active,
     treeNodeRequiredProps,
+    motionRow,
+    motionMarginLeft = 0,
     ...props
   },
   ref,
@@ -78,7 +82,17 @@ const MotionTreeNode: React.ForwardRefRenderFunction<HTMLDivElement, MotionTreeN
           <div
             ref={motionRef}
             className={classNames(`${prefixCls}-treenode-motion`, motionClassName)}
-            style={motionStyle}
+            style={
+              motionRow
+                ? {
+                    ...motionStyle,
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    marginLeft: motionMarginLeft,
+                  }
+                : motionStyle
+            }
           >
             {motionNodes.map((treeNode: FlattenNode) => {
               const {

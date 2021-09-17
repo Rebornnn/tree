@@ -8,7 +8,6 @@ import { FlattenNode, Key, DataEntity, DataNode, ScrollTo } from './interface';
 import MotionTreeNode from './MotionTreeNode';
 import { findExpandedKeys, getExpandRange } from './utils/diffUtil';
 import { getTreeNodeProps, getKey } from './utils/treeUtil';
-import Indent from './Indent';
 
 const HIDDEN_STYLE = {
   width: 0,
@@ -212,6 +211,8 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         );
 
         const newTransitionData: FlattenNode[] = prevData.slice();
+        MotionFlattenData.row = newTransitionData[keyIndex].row;
+        MotionFlattenData.originKey = newTransitionData[keyIndex].key;
         newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
 
         setTransitionData(newTransitionData);
@@ -228,6 +229,8 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         );
 
         const newTransitionData: FlattenNode[] = data.slice();
+        MotionFlattenData.row = newTransitionData[keyIndex].row;
+        MotionFlattenData.originKey = newTransitionData[keyIndex].key;
         newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
 
         setTransitionData(newTransitionData);
@@ -262,12 +265,21 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
     keyEntities,
   };
 
+  const computedIdentsWidth = (key: Key) => {
+    let width = 0;
+    if (key) {
+      width = indentMeasurerRef.current?.offsetWidth * (keyEntities[key].level + 1);
+    }
+    return width;
+  };
+
   const renderMotionTreeNode = (treeNode: FlattenNode) => {
     const {
       pos,
       data: { ...restProps },
       title,
       key,
+      originKey,
       isStart,
       isEnd,
     } = treeNode;
@@ -293,6 +305,8 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
         onMotionStart={onListChangeStart}
         onMotionEnd={onMotionEnd}
         treeNodeRequiredProps={treeNodeRequiredProps}
+        motionRow={key === MOTION_KEY && treeNode.row}
+        motionMarginLeft={computedIdentsWidth(originKey)}
         onMouseMove={() => {
           onActiveChange(null);
         }}
@@ -364,18 +378,13 @@ const RefNodeList: React.RefForwardingComponent<NodeListRef, NodeListProps> = (p
             resultNode = (
               <>
                 {renderMotionTreeNode(treeNode)}
-                <div className={`${prefixCls}-row-wrap`}>
-                  <Indent
-                    prefixCls={prefixCls}
-                    level={keyEntities[treeNode.key].level + 1}
-                    isStart={treeNode.isStart}
-                    isEnd={treeNode.isEnd}
-                  />
-                  <div className={`${prefixCls}-row`}>
-                    {treeNode.children.map(elem => (
-                      <React.Fragment key={elem.key}>{renderMotionTreeNode(elem)}</React.Fragment>
-                    ))}
-                  </div>
+                <div
+                  className={`${prefixCls}-row`}
+                  style={{ marginLeft: computedIdentsWidth(treeNode.key) }}
+                >
+                  {treeNode.children.map(elem => (
+                    <React.Fragment key={elem.key}>{renderMotionTreeNode(elem)}</React.Fragment>
+                  ))}
                 </div>
               </>
             );
